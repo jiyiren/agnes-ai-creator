@@ -6,6 +6,52 @@ A self-hosted multimodal web client for [Agnes AI](https://agnes-ai.com/), suppo
 
 > Free Agnes AI models · Vue 3 + FastAPI full stack · Modern glassmorphism UI · Web-based configuration
 
+<p align="center">
+  <img src="docs/images/ai-img-gen.png" alt="Agnes AI Creator — streaming AI chat" width="920"/>
+</p>
+
+<p align="center">
+  <strong>Chat · Images · Video — all in one beautiful UI</strong><br/>
+  Free Agnes AI models &nbsp;·&nbsp; Vue 3 + FastAPI &nbsp;·&nbsp; Glassmorphism design &nbsp;·&nbsp; Zero-code web settings
+</p>
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/images/ai-img-gen.png" alt="Image generation" width="100%"/>
+      <br/><br/>
+      <strong>🎨 Image generation</strong><br/>
+      Text-to-image · Single-image edit · Multi-image compose<br/>
+      Full history with one-click replay
+    </td>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/images/ai-video-gen.png" alt="Video generation" width="100%"/>
+      <br/><br/>
+      <strong>🎬 Video generation</strong><br/>
+      Text-to-video · Image-to-video · Keyframe animation<br/>
+      Built-in player · Auto-upload to Qiniu Cloud
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/images/ai-chat.png" alt="AI chat" width="100%"/>
+      <br/><br/>
+      <strong>💬 AI chat</strong><br/>
+      Streaming responses · Thinking mode<br/>
+      Token stats · Multi-conversation switching
+    </td>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/images/settings.png" alt="Web settings" width="100%"/>
+      <br/><br/>
+      <strong>⚙️ Web settings</strong><br/>
+      Configure API Keys & Base URL in the browser<br/>
+      Multi-key management · Instant effect · No restart
+    </td>
+  </tr>
+</table>
+
 ## Features
 
 | Module | Capabilities |
@@ -44,7 +90,7 @@ A self-hosted multimodal web client for [Agnes AI](https://agnes-ai.com/), suppo
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<your-username>/agnes-ai-creator.git
+git clone https://github.com/jiyiren/agnes-ai-creator.git
 cd agnes-ai-creator
 ```
 
@@ -92,6 +138,10 @@ npm run dev
 ### 5. First-time setup: configure Agnes AI
 
 Open [http://localhost:5173](http://localhost:5173) and go to **Settings** in the sidebar:
+
+<p align="center">
+  <img src="docs/images/settings.png" alt="Web settings — add API Key" width="720"/>
+</p>
 
 1. **API Base URL**: defaults to `https://apihub.agnes-ai.com`; usually no change needed
 2. **Add API Key**: enter a label and your key; check “Enable immediately after adding”

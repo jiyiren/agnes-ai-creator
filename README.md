@@ -2,16 +2,62 @@
 
 [English](README_EN.md)
 
-基于 [Agnes AI](https://agnes-ai.com/) 的自托管多模态 Web 客户端，支持 **AI 对话**、**文生图 / 图生图**、**文生视频 / 图生视频**，生成结果可自动上传至七牛云对象存储。
+基于 [Agnes AI](https://agnes-ai.com/) 免费大模型构建的自托管 Web 客户端，支持 **AI 对话**、**文生图 / 图生图**、**文生视频 / 图生视频**，生成结果可自动上传至七牛云对象存储(可选)。
 
-> 免费使用 Agnes AI 模型 · Vue 3 + FastAPI 全栈 · 毛玻璃现代 UI · 网页可视化配置
+> 免费使用 Agnes AI 模型，自己去 [Agnes AI 平台官网](https://platform.agnes-ai.com/) 注册后填入 key 即可使用。
+
+<p align="center">
+  <img src="docs/images/ai-img-gen.png" alt="Agnes AI Creator — AI 流式对话界面" width="920"/>
+</p>
+
+<p align="center">
+  <strong>对话 · 生图 · 生视频 · 一个界面全搞定</strong><br/>
+  免费 Agnes AI 模型 &nbsp;·&nbsp; Vue 3 + FastAPI 全栈 &nbsp;·&nbsp; 毛玻璃现代 UI &nbsp;·&nbsp; 网页可视化配置
+</p>
+
+## 界面预览
+
+<table>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/images/ai-img-gen.png" alt="图片生成界面" width="100%"/>
+      <br/><br/>
+      <strong>🎨 图片生成</strong><br/>
+      文生图 · 单图编辑 · 多图合成<br/>
+      生成历史与参数一键回看
+    </td>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/images/ai-video-gen.png" alt="视频生成界面" width="100%"/>
+      <br/><br/>
+      <strong>🎬 视频生成</strong><br/>
+      文生视频 · 图生视频 · 关键帧动画<br/>
+      内置播放器 · 自动转存七牛云
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/images/ai-chat.png" alt="AI 对话界面" width="100%"/>
+      <br/><br/>
+      <strong>💬 AI 对话</strong><br/>
+      流式输出 · Thinking 模式<br/>
+      Token 统计 · 多对话无缝切换
+    </td>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/images/settings.png" alt="网页设置界面" width="100%"/>
+      <br/><br/>
+      <strong>⚙️ 网页设置</strong><br/>
+      可视化配置 API Key 与 Base URL<br/>
+      多 Key 管理 · 即改即用 · 无需重启
+    </td>
+  </tr>
+</table>
 
 ## 功能特性
 
 | 模块 | 能力 |
 |------|------|
 | **文本对话** | 新建 / 切换对话、流式输出、Thinking 模式、Token 与耗时统计 |
-| **图片生成** | 文生图、单图编辑、多图合成；支持 `agnes-image-2.0-flash` / `agnes-image-2.1-flash` |
+| **图片生成** | 文生图、单图编辑、多图合成；多模型支持 |
 | **视频生成** | 文生视频、图生视频、多图视频、关键帧动画；后台异步轮询任务状态 |
 | **媒体存储** | 图片 / 视频生成结果自动转存七牛云，持久化历史记录 |
 | **网页设置** | 可视化配置 API Base URL、多 Key 管理与切换，无需改代码或重启 |
@@ -28,7 +74,7 @@
 
 - **前端**: Vue 3 · Vite · Vue Router · Tailwind CSS
 - **后端**: Python 3 · FastAPI · httpx · APScheduler
-- **数据库**: SQLite（零配置，首次启动自动建表）
+- **数据库**: SQLite（零配置，首次启动自动建表，SQL 文件在 backend/sql 文件夹里）
 - **对象存储**: 七牛云（可选）
 - **AI 接口**: [Agnes AI OpenAI 兼容 API](https://agnes-ai.com/doc/overview)
 
@@ -44,7 +90,7 @@
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/<your-username>/agnes-ai-creator.git
+git clone https://github.com/jiyiren/agnes-ai-creator.git
 cd agnes-ai-creator
 ```
 
@@ -92,6 +138,10 @@ npm run dev
 ### 5. 首次使用：配置 Agnes AI
 
 浏览器访问 [http://localhost:5173](http://localhost:5173)，进入侧边栏 **设置** 页面：
+
+<p align="center">
+  <img src="docs/images/settings.png" alt="网页设置 — 添加 API Key" width="720"/>
+</p>
 
 1. **API Base URL**：默认为 `https://apihub.agnes-ai.com`，一般无需修改
 2. **添加 API Key**：填写名称与 Key，勾选「添加后立即启用」
