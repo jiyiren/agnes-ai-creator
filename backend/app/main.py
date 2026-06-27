@@ -30,7 +30,7 @@ async def lifespan(app: FastAPI):
     scheduler.shutdown()
 
 
-app = FastAPI(title="Agnes AI Platform", lifespan=lifespan)
+app = FastAPI(title="Agnes AI Creator", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
