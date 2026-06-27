@@ -20,5 +20,14 @@ VIDEO_MODELS = ["agnes-video-v2.0"]
 IMAGE_SIZES = ["1024x768", "1024x1024", "768x1024", "768x768", "1280x720", "720x1280"]
 
 
+def is_qiniu_configured() -> bool:
+    return bool(
+        QINIU_ACCESS_KEY
+        and QINIU_SECRET_KEY
+        and QINIU_BUCKET
+        and QINIU_DOMAIN
+    )
+
+
 def validate_config():
     pass

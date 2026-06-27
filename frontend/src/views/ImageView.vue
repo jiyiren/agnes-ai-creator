@@ -2,12 +2,14 @@
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { imageApi } from '../api'
 import { useDialog } from '../composables/useDialog'
+import { useApiKeyGuard, imageModeNeedsQiniu } from '../composables/useApiKeyGuard'
 import { usePaginatedTaskHistory } from '../composables/usePaginatedTaskHistory'
 import { formatErrorMessage } from '../utils/errorMessage'
 import { canRefreshTaskStatus } from '../utils/transientError'
 import TrashIcon from '../components/TrashIcon.vue'
 
 const { confirm, alert } = useDialog()
+const { hasActiveKey, hasQiniuConfig, keyStatusLoading, refreshKeyStatus, requireApiKey, requireQiniuConfig } = useApiKeyGuard()
 
 const modes = [
   { id: 'text2img', name: '文生图' },
@@ -45,6 +47,8 @@ let historyObserver = null
 const selectedTask = computed(() =>
   history.value.find(t => t.id === selectedTaskId.value) || null
 )
+
+const currentModeNeedsQiniu = computed(() => imageModeNeedsQiniu(form.value.mode))
 
 function formatSizeLabel(size) {
   const [w, h] = size.split('x').map(Number)
@@ -105,9 +109,13 @@ function selectMode(modeId) {
   }
 }
 
-function handleFileSelect(e) {
+async function handleFileSelect(e) {
   const files = Array.from(e.target.files)
   if (!files.length) return
+  if (!(await requireQiniuConfig())) {
+    e.target.value = ''
+    return
+  }
   if (form.value.mode === 'img2img') {
     if (inputImages.value[0]) revokePreview(inputImages.value[0])
     inputImages.value = [{ file: files[0], preview: URL.createObjectURL(files[0]) }]
@@ -137,6 +145,8 @@ async function generate() {
     error.value = '请选择输入图片'
     return
   }
+  if (!(await requireApiKey())) return
+  if (currentModeNeedsQiniu.value && !(await requireQiniuConfig())) return
 
   generating.value = true
   generateStep.value = form.value.mode === 'text2img' ? 'generating' : 'uploading'
@@ -350,6 +360,7 @@ function fillFormFromTask(task) {
 }
 
 onMounted(async () => {
+  await refreshKeyStatus()
   await loadMeta()
   await nextTick()
   setupHistoryObserver()
@@ -472,6 +483,27 @@ onUnmounted(() => {
             <p class="text-white/50 text-sm mt-1">文生图 · 单图编辑 · 多图合成</p>
           </div>
 
+          <div
+            v-if="!keyStatusLoading && !hasActiveKey"
+            class="glass-card border border-amber-400/30 bg-amber-400/10 py-3 px-4"
+          >
+            <p class="text-sm text-amber-100/90">
+              尚未配置 Agnes AI API Key，无法生成图片。请前往
+              <router-link to="/settings" class="text-cyan-300 hover:underline">设置</router-link>
+              添加并启用 Key。
+            </p>
+          </div>
+
+          <div
+            v-if="!keyStatusLoading && !hasQiniuConfig"
+            class="glass-card border border-sky-400/25 bg-sky-400/10 py-3 px-4"
+          >
+            <p class="text-sm text-sky-100/90">
+              未配置七牛云对象存储：当前可使用<strong class="font-semibold text-white/90">文生图</strong>；单图编辑、多图合成需上传参考图，暂不可用。生成结果使用 Agnes 临时链接，可能无法长期访问。
+              <router-link to="/settings#storage" class="text-cyan-300 hover:underline ml-1">查看配置说明</router-link>
+            </p>
+          </div>
+
           <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
             <!-- Form -->
             <div ref="formCardRef" class="glass-card space-y-4">
@@ -488,6 +520,13 @@ onUnmounted(() => {
                       : 'border-white/10 text-white/50 hover:border-white/25 hover:bg-white/5'"
                   >{{ m.name }}</button>
                 </div>
+                <p
+                  v-if="!keyStatusLoading && !hasQiniuConfig && currentModeNeedsQiniu"
+                  class="text-xs text-amber-200/90 mt-2 glass px-3 py-2 rounded-xl border border-amber-400/25"
+                >
+                  此模式需上传参考图，请先配置七牛云对象存储。
+                  <router-link to="/settings#storage" class="text-cyan-300 hover:underline">查看说明</router-link>
+                </p>
               </div>
 
               <div>
@@ -519,7 +558,10 @@ onUnmounted(() => {
                     <button @click="removeInputImage(i)" class="absolute -top-1 -right-1 w-6 h-6 bg-rose-500 rounded-full text-xs opacity-0 group-hover:opacity-100 shadow-lg">✕</button>
                   </div>
                 </div>
-                <label class="btn-secondary inline-flex items-center gap-2 cursor-pointer text-sm">
+                <label
+                  class="btn-secondary inline-flex items-center gap-2 text-sm"
+                  :class="!hasQiniuConfig ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'cursor-pointer'"
+                >
                   <input
                     type="file"
                     accept="image/*"

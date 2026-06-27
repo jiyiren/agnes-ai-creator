@@ -6,12 +6,14 @@ import { renderMarkdown } from '../utils/markdown'
 import { userTokenCount } from '../utils/tokens'
 import { useDialog } from '../composables/useDialog'
 import { useClipboard } from '../composables/useClipboard'
+import { useApiKeyGuard } from '../composables/useApiKeyGuard'
 import TrashIcon from '../components/TrashIcon.vue'
 
 const route = useRoute()
 const router = useRouter()
 const { confirm, alert } = useDialog()
 const { copyText, isCopied } = useClipboard()
+const { hasActiveKey, keyStatusLoading, refreshKeyStatus, requireApiKey } = useApiKeyGuard()
 
 const conversations = ref([])
 const currentConv = ref(null)
@@ -234,6 +236,7 @@ function startStream(apiCall, modelId) {
 
 async function send() {
   if (!input.value.trim() || loading.value) return
+  if (!(await requireApiKey())) return
   if (!currentConv.value) {
     const conv = await chatApi.createConversation({ title: input.value.slice(0, 30), model: selectedModel.value })
     currentConv.value = conv
@@ -262,6 +265,7 @@ function submitContent(content) {
 
 async function regenerateMessage(msg, index) {
   if (!msg?.id || loading.value || msg.role !== 'assistant') return
+  if (!(await requireApiKey())) return
   const prevUser = [...messages.value.slice(0, index)].reverse().find(m => m.role === 'user')
   if (!prevUser) {
     await alert({ title: '无法重新生成', message: '找不到对应的用户提问。', confirmVariant: 'danger' })
@@ -326,6 +330,7 @@ async function deleteUserMessage(msg) {
 
 async function regenerateUserMessage(msg) {
   if (!msg?.id || loading.value || msg.role !== 'user') return
+  if (!(await requireApiKey())) return
   const content = msg.content
   try {
     await chatApi.deleteMessage(currentConv.value.id, msg.id)
@@ -349,6 +354,7 @@ function formatDuration(ms) {
 }
 
 onMounted(async () => {
+  await refreshKeyStatus()
   const data = await chatApi.getModels()
   models.value = data.models
   await loadConversations()
@@ -439,6 +445,16 @@ watch(() => route.params.id, async (id) => {
 
     <!-- Chat area -->
     <div class="flex-1 flex flex-col">
+      <div
+        v-if="!keyStatusLoading && !hasActiveKey"
+        class="mx-6 mt-4 glass-card border border-amber-400/30 bg-amber-400/10 py-3 px-4"
+      >
+        <p class="text-sm text-amber-100/90">
+          尚未配置 Agnes AI API Key，无法发送消息。请前往
+          <router-link to="/settings" class="text-cyan-300 hover:underline">设置</router-link>
+          添加并启用 Key。
+        </p>
+      </div>
       <!-- Header -->
       <div class="px-6 py-4 border-b border-white/10 flex items-center gap-4 flex-wrap bg-black/5">
         <div v-if="currentConv" class="flex items-center gap-2 min-w-0 max-w-[240px]">

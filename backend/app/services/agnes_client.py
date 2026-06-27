@@ -7,7 +7,7 @@ from app.services.api_key_service import get_active_api_key
 from app.services.app_settings_service import get_agnes_base_url
 from app.services.error_utils import format_agnes_error
 
-NO_API_KEY_MSG = "未配置 Agnes AI API Key，请前往设置页面添加并启用"
+NO_API_KEY_MSG = "尚未配置 Agnes AI API Key，无法操作。请前往设置页面添加并启用 API Key。"
 
 
 class AgnesClient:

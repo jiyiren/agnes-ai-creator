@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 
 from app.schemas import AgnesBaseUrlUpdate, ApiKeyCreate, ApiKeyUpdate
 from app.services import api_key_service
+from app.config import is_qiniu_configured
 from app.services.app_settings_service import (
     DEFAULT_AGNES_BASE_URL,
     get_agnes_base_url,
@@ -17,6 +18,7 @@ def get_status():
     return {
         "has_active_key": bool(active),
         "key_count": len(api_key_service.list_api_keys()),
+        "has_qiniu_config": is_qiniu_configured(),
         "agnes_base_url": get_agnes_base_url(),
         "default_agnes_base_url": DEFAULT_AGNES_BASE_URL,
     }

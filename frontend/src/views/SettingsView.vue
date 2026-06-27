@@ -6,7 +6,13 @@ import { useDialog } from '../composables/useDialog'
 const { confirm, alert } = useDialog()
 
 const keys = ref([])
-const status = ref({ has_active_key: false, key_count: 0, agnes_base_url: '', default_agnes_base_url: '' })
+const status = ref({
+  has_active_key: false,
+  has_qiniu_config: false,
+  key_count: 0,
+  agnes_base_url: '',
+  default_agnes_base_url: '',
+})
 const loading = ref(false)
 const saving = ref(false)
 const savingBaseUrl = ref(false)
@@ -150,7 +156,7 @@ onMounted(loadKeys)
       <h2 class="text-2xl font-bold bg-gradient-to-r from-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">
         设置
       </h2>
-      <p class="text-sm text-white/50 mt-1">管理 Agnes AI 连接配置，包括 API 地址与 API Key</p>
+      <p class="text-sm text-white/50 mt-1">管理 Agnes AI 连接配置与对象存储状态</p>
     </header>
 
     <div class="flex-1 overflow-y-auto p-8 space-y-8">
@@ -164,19 +170,72 @@ onMounted(loadKeys)
           <div>
             <p class="font-semibold text-amber-200">尚未启用 API Key</p>
             <p class="text-sm text-white/60 mt-1">
-              请添加至少一个 API Key 并启用，否则无法使用对话、图片和视频生成功能。
-              可在
+              请先在
               <a
                 href="https://platform.agnes-ai.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-cyan-300 hover:underline"
               >Agnes AI 平台</a>
-              免费申请。
+              注册账号并创建 API Key，然后在下方添加并启用，否则无法使用对话、图片和视频生成功能。
             </p>
           </div>
         </div>
       </div>
+
+      <!-- 对象存储 -->
+      <section id="storage" class="glass-card scroll-mt-6">
+        <div class="flex items-center justify-between gap-3 mb-1">
+          <h3 class="text-lg font-bold text-white">对象存储（七牛云）</h3>
+          <span
+            v-if="!loading"
+            class="text-xs px-2.5 py-1 rounded-full border"
+            :class="status.has_qiniu_config
+              ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/10'
+              : 'border-amber-400/40 text-amber-200 bg-amber-400/10'"
+          >
+            {{ status.has_qiniu_config ? '已配置' : '未配置' }}
+          </span>
+        </div>
+        <p class="text-sm text-white/50 mb-4">
+          七牛云用于上传参考图片，并将生成结果持久化到 CDN。未配置时仍可使用文生图、文生视频，但带参考图的模式不可用，历史媒体链接可能过期。
+        </p>
+
+        <div
+          v-if="!loading && !status.has_qiniu_config"
+          class="rounded-2xl border border-amber-400/30 bg-amber-400/10 p-4 mb-4"
+        >
+          <p class="text-sm text-amber-100/90 font-medium">如何配置</p>
+          <ol class="text-sm text-white/60 mt-2 space-y-1.5 list-decimal list-inside">
+            <li>
+              前往
+              <a
+                href="https://portal.qiniu.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-cyan-300 hover:underline"
+              >七牛云控制台</a>
+              注册并创建存储空间（Bucket），绑定 CDN 访问域名
+            </li>
+            <li>复制 Access Key、Secret Key、Bucket 名称与 CDN 域名</li>
+            <li>
+              编辑项目中的
+              <code class="text-cyan-300/90">backend/.env</code>
+              （可参考
+              <code class="text-cyan-300/90">backend/.env.example</code>）
+            </li>
+            <li>填入以下变量后重启后端服务</li>
+          </ol>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-black/20 p-4 font-mono text-xs text-white/70 space-y-1">
+          <p>QINIU_ACCESS_KEY=你的 Access Key</p>
+          <p>QINIU_SECRET_KEY=你的 Secret Key</p>
+          <p>QINIU_BUCKET=存储桶名称</p>
+          <p>QINIU_DOMAIN=https://你的 CDN 域名</p>
+          <p class="text-white/40">QINIU_REGION=z0  <span class="font-sans">（可选，默认华东）</span></p>
+        </div>
+      </section>
 
       <!-- API Base URL -->
       <section class="glass-card">
@@ -207,7 +266,17 @@ onMounted(loadKeys)
 
       <!-- 添加 Key -->
       <section class="glass-card">
-        <h3 class="text-lg font-bold text-white mb-4">添加 API Key</h3>
+        <h3 class="text-lg font-bold text-white mb-1">添加 API Key</h3>
+        <p class="text-sm text-white/50 mb-4">
+          请先在
+          <a
+            href="https://platform.agnes-ai.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-cyan-300 hover:underline"
+          >Agnes AI 平台</a>
+          注册账号并创建 API Key，然后将 Key 粘贴到下方输入框。
+        </p>
         <div class="grid gap-4 md:grid-cols-2">
           <div>
             <label class="block text-xs text-white/50 mb-1.5">名称</label>

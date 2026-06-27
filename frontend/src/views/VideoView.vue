@@ -2,12 +2,14 @@
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { videoApi } from '../api'
 import { useDialog } from '../composables/useDialog'
+import { useApiKeyGuard, videoModeNeedsQiniu } from '../composables/useApiKeyGuard'
 import { usePaginatedTaskHistory } from '../composables/usePaginatedTaskHistory'
 import { formatErrorMessage } from '../utils/errorMessage'
 import { canRefreshTaskStatus } from '../utils/transientError'
 import TrashIcon from '../components/TrashIcon.vue'
 
 const { alert, confirm } = useDialog()
+const { hasActiveKey, hasQiniuConfig, keyStatusLoading, refreshKeyStatus, requireApiKey, requireQiniuConfig } = useApiKeyGuard()
 
 const meta = ref({ modes: [], frame_presets: [], resolution_presets: [] })
 const form = ref({
@@ -40,6 +42,8 @@ const historyScrollRef = ref(null)
 const historySentinelRef = ref(null)
 let historyObserver = null
 let pollTimer = null
+
+const currentModeNeedsQiniu = computed(() => videoModeNeedsQiniu(form.value.mode))
 
 const selectedTask = computed(() =>
   history.value.find(t => t.id === selectedTaskId.value) || null
@@ -97,6 +101,11 @@ function setupHistoryObserver() {
 
 async function handleUpload(e) {
   const files = Array.from(e.target.files)
+  if (!files.length) return
+  if (!(await requireQiniuConfig())) {
+    e.target.value = ''
+    return
+  }
   uploading.value = true
   try {
     for (const file of files) {
@@ -114,6 +123,10 @@ async function handleUpload(e) {
 
 function removeImage(i) {
   inputImages.value.splice(i, 1)
+}
+
+function selectMode(modeId) {
+  form.value.mode = modeId
 }
 
 function applyPreset(preset) {
@@ -172,6 +185,8 @@ async function generate() {
     error.value = '至少需要 2 张图片'
     return
   }
+  if (!(await requireApiKey())) return
+  if (currentModeNeedsQiniu.value && !(await requireQiniuConfig())) return
 
   error.value = ''
   submitting.value = true
@@ -355,6 +370,7 @@ async function refreshTaskStatus(task) {
 
 async function retryTask(task) {
   if (!task?.id || task._optimistic || retrying.value) return
+  if (!(await requireApiKey())) return
   retrying.value = true
   error.value = ''
 
@@ -448,6 +464,7 @@ function fillFormFromTask(task) {
 }
 
 onMounted(async () => {
+  await refreshKeyStatus()
   await loadMeta()
   await nextTick()
   setupHistoryObserver()
@@ -585,6 +602,27 @@ onUnmounted(() => {
             <p class="text-white/50 text-sm mt-1">文生视频 · 图生视频 · 多图视频 · 关键帧动画</p>
           </div>
 
+          <div
+            v-if="!keyStatusLoading && !hasActiveKey"
+            class="glass-card border border-amber-400/30 bg-amber-400/10 py-3 px-4"
+          >
+            <p class="text-sm text-amber-100/90">
+              尚未配置 Agnes AI API Key，无法生成视频。请前往
+              <router-link to="/settings" class="text-cyan-300 hover:underline">设置</router-link>
+              添加并启用 Key。
+            </p>
+          </div>
+
+          <div
+            v-if="!keyStatusLoading && !hasQiniuConfig"
+            class="glass-card border border-sky-400/25 bg-sky-400/10 py-3 px-4"
+          >
+            <p class="text-sm text-sky-100/90">
+              未配置七牛云对象存储：当前可使用<strong class="font-semibold text-white/90">文生视频</strong>；图生视频、多图视频、关键帧动画需上传参考图，暂不可用。生成结果使用 Agnes 临时链接，可能无法长期访问。
+              <router-link to="/settings#storage" class="text-cyan-300 hover:underline ml-1">查看配置说明</router-link>
+            </p>
+          </div>
+
           <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
             <!-- Form -->
             <div ref="formCardRef" class="glass-card space-y-4">
@@ -594,13 +632,20 @@ onUnmounted(() => {
                   <button
                     v-for="m in meta.modes"
                     :key="m.id"
-                    @click="form.mode = m.id"
+                    @click="selectMode(m.id)"
                     class="px-3 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200 border"
                     :class="form.mode === m.id
                       ? 'border-fuchsia-400/50 bg-gradient-to-r from-fuchsia-500/25 to-cyan-400/15 text-white shadow-glow-cyan'
                       : 'border-white/10 text-white/50 hover:border-white/25 hover:bg-white/5'"
                   >{{ m.name }}</button>
                 </div>
+                <p
+                  v-if="!keyStatusLoading && !hasQiniuConfig && currentModeNeedsQiniu"
+                  class="text-xs text-amber-200/90 mt-2 glass px-3 py-2 rounded-xl border border-amber-400/25"
+                >
+                  此模式需上传参考图，请先配置七牛云对象存储。
+                  <router-link to="/settings#storage" class="text-cyan-300 hover:underline">查看说明</router-link>
+                </p>
               </div>
 
               <div>
@@ -623,7 +668,10 @@ onUnmounted(() => {
                     <button @click="removeImage(i)" class="absolute -top-1 -right-1 w-6 h-6 bg-rose-500 rounded-full text-xs opacity-0 group-hover:opacity-100 shadow-lg">✕</button>
                   </div>
                 </div>
-                <label class="btn-secondary inline-flex items-center gap-2 cursor-pointer text-sm">
+                <label
+                  class="btn-secondary inline-flex items-center gap-2 text-sm"
+                  :class="!hasQiniuConfig ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'cursor-pointer'"
+                >
                   <input type="file" accept="image/*" multiple class="hidden" @change="handleUpload" />
                   {{ uploading ? '上传中...' : '+ 上传图片' }}
                 </label>
