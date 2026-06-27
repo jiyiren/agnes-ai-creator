@@ -1,8 +1,28 @@
-# Agnes AI Creator
-
-[English](README_EN.md)
-
-基于 [Agnes AI](https://agnes-ai.com/) 免费大模型构建的自托管 Web 客户端，支持 **AI 对话**、**文生图 / 图生图**、**文生视频 / 图生视频**，生成结果可自动上传至七牛云对象存储(可选)。
+<h4 align="right"><a href="README_EN.md">English</a> | <strong>简体中文</strong></h4>
+<p align="center">
+  <img src="docs/images/logo.jpg" width="138" alt="Agnes AI Creator" style="border-radius: 28px;"/>
+</p>
+<h1 align="center">Agnes AI Creator</h1>
+<p align="center"><strong>基于 Agnes AI 免费大模型的自托管多模态 Web 客户端</strong></p>
+<p align="center">AI 对话 · 文生图 / 图生图 · 文生视频 / 图生视频 · 七牛云持久化（可选）</p>
+<div align="center">
+  <a href="./LICENSE" target="_blank">
+  <img alt="license" src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square"></a>
+  <a href="https://platform.agnes-ai.com/" target="_blank">
+  <img alt="agnes ai" src="https://img.shields.io/badge/platform-Agnes%20AI-ff6b3d?style=flat-square"></a>
+  <a href="https://agnes-ai.com/doc/overview" target="_blank">
+  <img alt="models" src="https://img.shields.io/badge/models-text%20%7C%20image%20%7C%20video-black?style=flat-square"></a>
+  <a href="https://www.python.org/" target="_blank">
+  <img alt="python" src="https://img.shields.io/badge/python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white"></a>
+  <a href="https://vuejs.org/" target="_blank">
+  <img alt="vue" src="https://img.shields.io/badge/vue-3.5-4FC08D?style=flat-square&logo=vuedotjs&logoColor=white"></a>
+  <a href="https://fastapi.tiangolo.com/" target="_blank">
+  <img alt="fastapi" src="https://img.shields.io/badge/FastAPI-0.115-009688?style=flat-square&logo=fastapi&logoColor=white"></a>
+  <a href="https://vitejs.dev/" target="_blank">
+  <img alt="vite" src="https://img.shields.io/badge/vite-6.0-646CFF?style=flat-square&logo=vite&logoColor=white"></a>
+  <a href="https://x.com/haiqushe" target="_blank">
+  <img alt="x" src="https://img.shields.io/badge/X-@haiqushe-000000?style=flat-square&logo=x&logoColor=white"></a>
+</div>
 
 > 免费使用 Agnes AI 模型，自己去 [Agnes AI 平台官网](https://platform.agnes-ai.com/) 注册后填入 key 即可使用。
 
@@ -17,37 +37,29 @@
 
 ## 界面预览
 
-<table>
+<table cellpadding="6">
   <tr>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/ai-img-gen.png" alt="图片生成界面" width="100%"/>
-      <br/><br/>
+      <img src="docs/images/ai-img-gen.png" alt="图片生成界面" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
       <strong>🎨 图片生成</strong><br/>
-      文生图 · 单图编辑 · 多图合成<br/>
-      生成历史与参数一键回看
+      <span style="font-size:13px">文生图 · 单图编辑 · 多图合成 · 历史回看</span>
     </td>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/ai-video-gen.png" alt="视频生成界面" width="100%"/>
-      <br/><br/>
+      <img src="docs/images/ai-video-gen.png" alt="视频生成界面" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
       <strong>🎬 视频生成</strong><br/>
-      文生视频 · 图生视频 · 关键帧动画<br/>
-      内置播放器 · 自动转存七牛云
+      <span style="font-size:13px">文/图生视频 · 关键帧动画 · 内置播放器 · 七牛云转存</span>
     </td>
   </tr>
   <tr>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/ai-chat.png" alt="AI 对话界面" width="100%"/>
-      <br/><br/>
+      <img src="docs/images/ai-chat.png" alt="AI 对话界面" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
       <strong>💬 AI 对话</strong><br/>
-      流式输出 · Thinking 模式<br/>
-      Token 统计 · 多对话无缝切换
+      <span style="font-size:13px">流式输出 · Thinking 模式 · Token 统计 · 多对话切换</span>
     </td>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/settings.png" alt="网页设置界面" width="100%"/>
-      <br/><br/>
+      <img src="docs/images/settings.png" alt="网页设置界面" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
       <strong>⚙️ 网页设置</strong><br/>
-      可视化配置 API Key 与 Base URL<br/>
-      多 Key 管理 · 即改即用 · 无需重启
+      <span style="font-size:13px">API Key / Base URL 可视化配置 · 多 Key 管理 · 即改即用</span>
     </td>
   </tr>
 </table>
@@ -139,7 +151,7 @@ npm run dev
 
 浏览器访问 [http://localhost:5173](http://localhost:5173)，进入侧边栏 **设置** 页面：
 
-<p align="center">
+<p align="left">
   <img src="docs/images/settings.png" alt="网页设置 — 添加 API Key" width="720"/>
 </p>
 

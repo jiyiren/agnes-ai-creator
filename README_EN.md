@@ -1,10 +1,30 @@
-# Agnes AI Creator
+<h4 align="right"><strong>English</strong> | <a href="README.md">简体中文</a></h4>
+<p align="center">
+  <img src="docs/images/logo.jpg" width="138" alt="Agnes AI Creator" style="border-radius: 28px;"/>
+</p>
+<h1 align="center">Agnes AI Creator</h1>
+<p align="center"><strong>A self-hosted multimodal web client powered by free Agnes AI models</strong></p>
+<p align="center">AI chat · Text-to-image / image edit · Text-to-video / image-to-video · Qiniu Cloud storage (optional)</p>
+<div align="center">
+  <a href="./LICENSE" target="_blank">
+  <img alt="license" src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square"></a>
+  <a href="https://platform.agnes-ai.com/" target="_blank">
+  <img alt="agnes ai" src="https://img.shields.io/badge/platform-Agnes%20AI-ff6b3d?style=flat-square"></a>
+  <a href="https://agnes-ai.com/doc/overview" target="_blank">
+  <img alt="models" src="https://img.shields.io/badge/models-text%20%7C%20image%20%7C%20video-black?style=flat-square"></a>
+  <a href="https://www.python.org/" target="_blank">
+  <img alt="python" src="https://img.shields.io/badge/python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white"></a>
+  <a href="https://vuejs.org/" target="_blank">
+  <img alt="vue" src="https://img.shields.io/badge/vue-3.5-4FC08D?style=flat-square&logo=vuedotjs&logoColor=white"></a>
+  <a href="https://fastapi.tiangolo.com/" target="_blank">
+  <img alt="fastapi" src="https://img.shields.io/badge/FastAPI-0.115-009688?style=flat-square&logo=fastapi&logoColor=white"></a>
+  <a href="https://vitejs.dev/" target="_blank">
+  <img alt="vite" src="https://img.shields.io/badge/vite-6.0-646CFF?style=flat-square&logo=vite&logoColor=white"></a>
+  <a href="https://x.com/haiqushe" target="_blank">
+  <img alt="x" src="https://img.shields.io/badge/X-@haiqushe-000000?style=flat-square&logo=x&logoColor=white"></a>
+</div>
 
-[中文文档](README.md)
-
-A self-hosted multimodal web client for [Agnes AI](https://agnes-ai.com/), supporting **AI chat**, **text-to-image / image-to-image**, and **text-to-video / image-to-video**. Generated media can be automatically uploaded to Qiniu Cloud object storage.
-
-> Free Agnes AI models · Vue 3 + FastAPI full stack · Modern glassmorphism UI · Web-based configuration
+> Free Agnes AI models — [sign up on the platform](https://platform.agnes-ai.com/), add your API key in Settings, and start creating.
 
 <p align="center">
   <img src="docs/images/ai-img-gen.png" alt="Agnes AI Creator — streaming AI chat" width="920"/>
@@ -17,37 +37,29 @@ A self-hosted multimodal web client for [Agnes AI](https://agnes-ai.com/), suppo
 
 ## Screenshots
 
-<table>
+<table cellpadding="6">
   <tr>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/ai-img-gen.png" alt="Image generation" width="100%"/>
-      <br/><br/>
+      <img src="docs/images/ai-img-gen.png" alt="Image generation" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
       <strong>🎨 Image generation</strong><br/>
-      Text-to-image · Single-image edit · Multi-image compose<br/>
-      Full history with one-click replay
+      <span style="font-size:13px">Text-to-image · Edit · Multi-image compose · History replay</span>
     </td>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/ai-video-gen.png" alt="Video generation" width="100%"/>
-      <br/><br/>
+      <img src="docs/images/ai-video-gen.png" alt="Video generation" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
       <strong>🎬 Video generation</strong><br/>
-      Text-to-video · Image-to-video · Keyframe animation<br/>
-      Built-in player · Auto-upload to Qiniu Cloud
+      <span style="font-size:13px">Text/image-to-video · Keyframe animation · Player · Qiniu upload</span>
     </td>
   </tr>
   <tr>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/ai-chat.png" alt="AI chat" width="100%"/>
-      <br/><br/>
+      <img src="docs/images/ai-chat.png" alt="AI chat" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
       <strong>💬 AI chat</strong><br/>
-      Streaming responses · Thinking mode<br/>
-      Token stats · Multi-conversation switching
+      <span style="font-size:13px">Streaming · Thinking mode · Token stats · Multi-conversation</span>
     </td>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/settings.png" alt="Web settings" width="100%"/>
-      <br/><br/>
+      <img src="docs/images/settings.png" alt="Web settings" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
       <strong>⚙️ Web settings</strong><br/>
-      Configure API Keys & Base URL in the browser<br/>
-      Multi-key management · Instant effect · No restart
+      <span style="font-size:13px">API Key / Base URL in browser · Multi-key · Instant effect</span>
     </td>
   </tr>
 </table>
@@ -139,7 +151,7 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173) and go to **Settings** in the sidebar:
 
-<p align="center">
+<p align="left">
   <img src="docs/images/settings.png" alt="Web settings — add API Key" width="720"/>
 </p>
 
