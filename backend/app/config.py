@@ -5,9 +5,6 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent  # backend/
 load_dotenv(BASE_DIR / ".env")
 
-AGNES_API_KEY = os.getenv("AGNES_API_KEY", "").strip()
-AGNES_BASE_URL = os.getenv("AGNES_BASE_URL", "https://apihub.agnes-ai.com").strip().rstrip("/")
-
 QINIU_ACCESS_KEY = os.getenv("QINIU_ACCESS_KEY", "").strip()
 QINIU_SECRET_KEY = os.getenv("QINIU_SECRET_KEY", "").strip()
 QINIU_BUCKET = os.getenv("QINIU_BUCKET", "").strip()
@@ -24,7 +21,4 @@ IMAGE_SIZES = ["1024x768", "1024x1024", "768x1024", "768x768", "1280x720", "720x
 
 
 def validate_config():
-    if not AGNES_API_KEY:
-        raise RuntimeError("缺少 AGNES_API_KEY，请检查 backend/.env")
-    if not AGNES_BASE_URL.startswith("http"):
-        raise RuntimeError(f"AGNES_BASE_URL 配置无效: {AGNES_BASE_URL!r}")
+    pass

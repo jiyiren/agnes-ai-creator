@@ -82,6 +82,25 @@ CREATE INDEX IF NOT EXISTS idx_video_tasks_status ON video_tasks(status);
 CREATE INDEX IF NOT EXISTS idx_video_tasks_video_id ON video_tasks(video_id);
 CREATE INDEX IF NOT EXISTS idx_video_tasks_created_at ON video_tasks(created_at DESC);
 
+-- 应用配置（键值对）
+CREATE TABLE IF NOT EXISTS app_settings (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+);
+
+-- Agnes AI API Key 配置表
+CREATE TABLE IF NOT EXISTS api_keys (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    api_key TEXT NOT NULL,
+    is_active INTEGER NOT NULL DEFAULT 0 CHECK(is_active IN (0, 1)),
+    created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
+    updated_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_api_keys_active ON api_keys(is_active);
+
 -- 上传文件记录表
 CREATE TABLE IF NOT EXISTS uploads (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

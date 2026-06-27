@@ -125,3 +125,19 @@ export const videoApi = {
     return resp.json()
   },
 }
+
+export const settingsApi = {
+  getStatus: () => request('/settings/status').then(r => r.json()),
+  getBaseUrl: () => request('/settings/base-url').then(r => r.json()),
+  updateBaseUrl: (base_url) =>
+    request('/settings/base-url', { method: 'PUT', body: JSON.stringify({ base_url }) }).then(r => r.json()),
+  listApiKeys: () => request('/settings/api-keys').then(r => r.json()),
+  createApiKey: (data) =>
+    request('/settings/api-keys', { method: 'POST', body: JSON.stringify(data) }).then(r => r.json()),
+  updateApiKey: (id, data) =>
+    request(`/settings/api-keys/${id}`, { method: 'PATCH', body: JSON.stringify(data) }).then(r => r.json()),
+  activateApiKey: (id) =>
+    request(`/settings/api-keys/${id}/activate`, { method: 'POST' }).then(r => r.json()),
+  deleteApiKey: (id) =>
+    request(`/settings/api-keys/${id}`, { method: 'DELETE' }).then(r => r.json()),
+}

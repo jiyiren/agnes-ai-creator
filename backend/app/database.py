@@ -62,6 +62,11 @@ def init_db():
             conn.execute("ALTER TABLE messages ADD COLUMN model TEXT")
         conn.commit()
     _migrate_video_tasks_status()
+    from app.services.api_key_service import import_env_api_key_if_empty
+    from app.services.app_settings_service import ensure_default_settings
+
+    ensure_default_settings()
+    import_env_api_key_if_empty()
 
 
 @contextmanager

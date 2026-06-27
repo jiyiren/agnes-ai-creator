@@ -46,6 +46,21 @@ class ImageGenerateRequest(BaseModel):
     response_format: str = "url"
 
 
+class AgnesBaseUrlUpdate(BaseModel):
+    base_url: str
+
+
+class ApiKeyCreate(BaseModel):
+    name: str
+    api_key: str
+    activate: bool = True
+
+
+class ApiKeyUpdate(BaseModel):
+    name: Optional[str] = None
+    api_key: Optional[str] = None
+
+
 class VideoGenerateRequest(BaseModel):
     model: str = "agnes-video-v2.0"
     prompt: str

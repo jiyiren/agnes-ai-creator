@@ -8,6 +8,7 @@ const navItems = [
   { path: '/chat', label: '文本对话', icon: '💬', gradient: 'from-violet-500 to-fuchsia-500' },
   { path: '/images', label: '图片生成', icon: '🎨', gradient: 'from-pink-500 to-orange-400' },
   { path: '/videos', label: '视频生成', icon: '🎬', gradient: 'from-cyan-400 to-blue-500' },
+  { path: '/settings', label: '设置', icon: '⚙️', gradient: 'from-slate-400 to-zinc-500' },
 ]
 </script>
 

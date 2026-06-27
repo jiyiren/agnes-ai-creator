@@ -3,18 +3,24 @@ import time
 import asyncio
 import httpx
 from typing import AsyncGenerator, Optional
-from app.config import AGNES_API_KEY, AGNES_BASE_URL
+from app.services.api_key_service import get_active_api_key
+from app.services.app_settings_service import get_agnes_base_url
 from app.services.error_utils import format_agnes_error
+
+NO_API_KEY_MSG = "未配置 Agnes AI API Key，请前往设置页面添加并启用"
 
 
 class AgnesClient:
-    def __init__(self):
-        self.base_url = AGNES_BASE_URL
-
     @property
-    def headers(self):
+    def base_url(self) -> str:
+        return get_agnes_base_url()
+
+    def _headers(self) -> dict:
+        api_key = get_active_api_key()
+        if not api_key:
+            raise RuntimeError(NO_API_KEY_MSG)
         return {
-            "Authorization": f"Bearer {AGNES_API_KEY}",
+            "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
         }
 
@@ -29,7 +35,7 @@ class AgnesClient:
             async with client.stream(
                 "POST",
                 f"{self.base_url}/v1/chat/completions",
-                headers=self.headers,
+                headers=self._headers(),
                 json=payload,
             ) as resp:
                 resp.raise_for_status()
@@ -61,7 +67,7 @@ class AgnesClient:
         async with httpx.AsyncClient(timeout=300, trust_env=False) as client:
             resp = await client.post(
                 f"{self.base_url}/v1/chat/completions",
-                headers=self.headers,
+                headers=self._headers(),
                 json=payload,
             )
             resp.raise_for_status()
@@ -74,7 +80,7 @@ class AgnesClient:
         start = time.time()
         url = f"{self.base_url}/v1/images/generations"
         async with httpx.AsyncClient(timeout=360, trust_env=False) as client:
-            resp = await client.post(url, headers=self.headers, json=payload)
+            resp = await client.post(url, headers=self._headers(), json=payload)
             if resp.status_code >= 400:
                 raise RuntimeError(f"Agnes API {resp.status_code}: {resp.text}")
             data = resp.json()
@@ -86,7 +92,7 @@ class AgnesClient:
         async with httpx.AsyncClient(timeout=120, trust_env=False) as client:
             resp = await client.post(
                 f"{self.base_url}/v1/videos",
-                headers=self.headers,
+                headers=self._headers(),
                 json=payload,
             )
             if resp.status_code >= 400:
@@ -117,7 +123,7 @@ class AgnesClient:
                 async with httpx.AsyncClient(timeout=60, trust_env=False) as client:
                     resp = await client.get(
                         f"{self.base_url}/agnesapi",
-                        headers=self.headers,
+                        headers=self._headers(),
                         params=params,
                     )
                     resp.raise_for_status()
@@ -141,7 +147,7 @@ class AgnesClient:
         async with httpx.AsyncClient(timeout=60, trust_env=False) as client:
             resp = await client.get(
                 f"{self.base_url}/v1/videos/{task_id}",
-                headers=self.headers,
+                headers=self._headers(),
             )
             resp.raise_for_status()
             return resp.json()

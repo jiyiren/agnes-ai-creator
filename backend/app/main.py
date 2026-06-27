@@ -6,7 +6,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 from app.database import init_db
 from app.config import validate_config
-from app.routers import chat, images, videos
+from app.routers import chat, images, videos, settings
 from app.services.video_poller import poll_pending_videos
 
 scheduler = BackgroundScheduler(job_defaults={"coalesce": True, "max_instances": 1})
@@ -43,6 +43,7 @@ app.add_middleware(
 app.include_router(chat.router)
 app.include_router(images.router)
 app.include_router(videos.router)
+app.include_router(settings.router)
 
 
 @app.get("/api/health")
