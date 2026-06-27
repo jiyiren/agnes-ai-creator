@@ -1,5 +1,7 @@
 # Agnes AI Creator
 
+[English](README_EN.md)
+
 基于 [Agnes AI](https://agnes-ai.com/) 的自托管多模态 Web 客户端，支持 **AI 对话**、**文生图 / 图生图**、**文生视频 / 图生视频**，生成结果自动上传至七牛云对象存储。
 
 > 免费使用 Agnes AI 模型 · Vue 3 + FastAPI 全栈 · 毛玻璃现代 UI
