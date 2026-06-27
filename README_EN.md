@@ -28,8 +28,10 @@
 
 > Free Agnes AI models — [sign up on the platform](https://platform.agnes-ai.com/), add your API key in Settings, and start creating.
 
+> Recommended: an AI model gateway with 500+ global models — [AIGC1024.com](https://aigc1024.com/)
+
 <p align="center">
-  <img src="docs/images/ai-img-gen.png" alt="Agnes AI Creator — streaming AI chat" width="920"/>
+  <img src="docs/images/ai-img-gen.png" alt="Agnes AI Creator — streaming AI chat" width="920" style="border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,0.18);"/>
 </p>
 
 <p align="center">
@@ -42,24 +44,24 @@
 <table cellpadding="6">
   <tr>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/ai-img-gen.png" alt="Image generation" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
+      <img src="docs/images/ai-img-gen.png" alt="Image generation" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);"/>
       <strong>🎨 Image generation</strong><br/>
       <span style="font-size:13px">Text-to-image · Edit · Multi-image compose · History replay</span>
     </td>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/ai-video-gen.png" alt="Video generation" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
+      <img src="docs/images/ai-video-gen.png" alt="Video generation" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);"/>
       <strong>🎬 Video generation</strong><br/>
       <span style="font-size:13px">Text/image-to-video · Keyframe animation · Player · Qiniu upload</span>
     </td>
   </tr>
   <tr>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/ai-chat.png" alt="AI chat" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
+      <img src="docs/images/ai-chat.png" alt="AI chat" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);"/>
       <strong>💬 AI chat</strong><br/>
       <span style="font-size:13px">Streaming · Thinking mode · Token stats · Multi-conversation</span>
     </td>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/settings.png" alt="Web settings" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
+      <img src="docs/images/settings.png" alt="Web settings" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);"/>
       <strong>⚙️ Web settings</strong><br/>
       <span style="font-size:13px">API Key / Base URL in browser · Multi-key · Instant effect</span>
     </td>
@@ -154,7 +156,7 @@ npm run dev
 Open [http://localhost:5173](http://localhost:5173) and go to **Settings** in the sidebar:
 
 <p align="left">
-  <img src="docs/images/settings.png" alt="Web settings — add API Key" width="720"/>
+  <img src="docs/images/settings.png" alt="Web settings — add API Key" width="720" style="border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);"/>
 </p>
 
 1. **API Base URL**: defaults to `https://apihub.agnes-ai.com`; usually no change needed

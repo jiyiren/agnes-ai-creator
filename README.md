@@ -31,7 +31,7 @@
 > 推荐一个汇聚全球 500+ 大模型的 AI 大模型中转站: [AIGC1024.com](https://aigc1024.com/)
 
 <p align="center">
-  <img src="docs/images/ai-img-gen.png" alt="Agnes AI Creator — AI 流式对话界面" width="920"/>
+  <img src="docs/images/ai-img-gen.png" alt="Agnes AI Creator — AI 流式对话界面" width="920" style="border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,0.18);"/>
 </p>
 
 <p align="center">
@@ -44,24 +44,24 @@
 <table cellpadding="6">
   <tr>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/ai-img-gen.png" alt="图片生成界面" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
+      <img src="docs/images/ai-img-gen.png" alt="图片生成界面" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);"/>
       <strong>🎨 图片生成</strong><br/>
       <span style="font-size:13px">文生图 · 单图编辑 · 多图合成 · 历史回看</span>
     </td>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/ai-video-gen.png" alt="视频生成界面" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
+      <img src="docs/images/ai-video-gen.png" alt="视频生成界面" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);"/>
       <strong>🎬 视频生成</strong><br/>
       <span style="font-size:13px">文/图生视频 · 关键帧动画 · 内置播放器 · 七牛云转存</span>
     </td>
   </tr>
   <tr>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/ai-chat.png" alt="AI 对话界面" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
+      <img src="docs/images/ai-chat.png" alt="AI 对话界面" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);"/>
       <strong>💬 AI 对话</strong><br/>
       <span style="font-size:13px">流式输出 · Thinking 模式 · Token 统计 · 多对话切换</span>
     </td>
     <td width="50%" align="center" valign="top">
-      <img src="docs/images/settings.png" alt="网页设置界面" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;"/>
+      <img src="docs/images/settings.png" alt="网页设置界面" width="100%" style="display:block;margin-bottom:6px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);"/>
       <strong>⚙️ 网页设置</strong><br/>
       <span style="font-size:13px">API Key / Base URL 可视化配置 · 多 Key 管理 · 即改即用</span>
     </td>
@@ -156,7 +156,7 @@ npm run dev
 浏览器访问 [http://localhost:5173](http://localhost:5173)，进入侧边栏 **设置** 页面：
 
 <p align="left">
-  <img src="docs/images/settings.png" alt="网页设置 — 添加 API Key" width="720"/>
+  <img src="docs/images/settings.png" alt="网页设置 — 添加 API Key" width="720" style="border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);"/>
 </p>
 
 1. **API Base URL**：默认为 `https://apihub.agnes-ai.com`，一般无需修改
