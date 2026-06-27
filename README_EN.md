@@ -21,7 +21,9 @@
   <a href="https://vitejs.dev/" target="_blank">
   <img alt="vite" src="https://img.shields.io/badge/vite-6.0-646CFF?style=flat-square&logo=vite&logoColor=white"></a>
   <a href="https://x.com/haiqushe" target="_blank">
-  <img alt="x" src="https://img.shields.io/badge/X-@haiqushe-000000?style=flat-square&logo=x&logoColor=white"></a>
+  <img alt="follow" src="https://img.shields.io/badge/follow-@haiqushe-red?style=flat-square"></a>
+  <a href="https://dz.haiqushe.com/" target="_blank">
+  <img alt="haiqushe" src="https://img.shields.io/badge/海趣社-Site%20Nav-blueviolet?style=flat-square"></a>
 </div>
 
 > Free Agnes AI models — [sign up on the platform](https://platform.agnes-ai.com/), add your API key in Settings, and start creating.
@@ -163,17 +165,6 @@ You can then use chat, image, and video generation.
 
 The dev server proxies `/api` requests to `http://127.0.0.1:8000`.
 
-## Web settings
-
-| Setting | Count | Description |
-|---------|-------|-------------|
-| API Base URL | 1 | Global Agnes API endpoint; default `https://apihub.agnes-ai.com` |
-| API Key | Multiple | Add, edit, delete; only one key is active at a time |
-
-- Keys are shown masked in the list (e.g. `****5678`)
-- Settings are stored in SQLite and take effect immediately — no restart required
-- If no key is active, AI requests prompt you to configure one in Settings
-
 ## Production deployment
 
 ```bash
@@ -255,28 +246,8 @@ agnes-ai-creator/
 └── _needs/                      # Requirements & design notes
 ```
 
-## FAQ
+## License
 
-### `ModuleNotFoundError: No module named 'apscheduler'`
+This project is licensed under the [MIT License](./LICENSE).
 
-Backend dependencies are not installed, or you are not using the virtual environment. Run:
-
-```bash
-cd backend
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-### “Agnes AI API Key not configured”
-
-Open **Settings** in the web UI, add at least one API Key, and click **Enable**.
-
-### Qiniu Cloud errors
-
-Check Qiniu settings in `backend/.env`. If you do not need persistent storage yet, you can ignore these errors — AI generation itself is unaffected.
-
-## Links
-
-- [Agnes AI](https://agnes-ai.com/)
-- [Agnes AI Developer Docs](https://agnes-ai.com/doc/overview)
-- [Agnes AI Platform (get API Key)](https://platform.agnes-ai.com/)
+You may use, modify, and distribute the code freely, provided the original copyright notice and license text are retained. The software is provided “as is”, without warranty of any kind.

@@ -21,10 +21,14 @@
   <a href="https://vitejs.dev/" target="_blank">
   <img alt="vite" src="https://img.shields.io/badge/vite-6.0-646CFF?style=flat-square&logo=vite&logoColor=white"></a>
   <a href="https://x.com/haiqushe" target="_blank">
-  <img alt="x" src="https://img.shields.io/badge/X-@haiqushe-000000?style=flat-square&logo=x&logoColor=white"></a>
+  <img alt="follow" src="https://img.shields.io/badge/follow-@haiqushe-red?style=flat-square"></a>
+  <a href="https://dz.haiqushe.com/" target="_blank">
+  <img alt="haiqushe" src="https://img.shields.io/badge/海趣社-站点导航-blueviolet?style=flat-square"></a>
 </div>
 
 > 免费使用 Agnes AI 模型，自己去 [Agnes AI 平台官网](https://platform.agnes-ai.com/) 注册后填入 key 即可使用。
+
+> 推荐一个汇聚全球 500+ 大模型的 AI 大模型中转站: [AIGC1024.com](https://aigc1024.com/)
 
 <p align="center">
   <img src="docs/images/ai-img-gen.png" alt="Agnes AI Creator — AI 流式对话界面" width="920"/>
@@ -163,17 +167,6 @@ npm run dev
 
 前端开发服务器会将 `/api` 请求代理至 `http://127.0.0.1:8000`。
 
-## 网页设置说明
-
-| 配置项 | 数量 | 说明 |
-|--------|------|------|
-| API Base URL | 1 个 | 全局 Agnes API 地址，默认 `https://apihub.agnes-ai.com` |
-| API Key | 多个 | 支持添加、编辑、删除；同一时间仅一个 Key 处于「使用中」 |
-
-- Key 列表仅显示脱敏值（如 `****5678`）
-- 配置保存在 SQLite，修改后立即生效，无需重启服务
-- 未启用任何 Key 时，AI 请求会提示前往设置页配置
-
 ## 生产部署
 
 ```bash
@@ -255,28 +248,8 @@ agnes-ai-creator/
 └── _needs/                      # 需求与设计说明
 ```
 
-## 常见问题
+## 开源协议
 
-### `ModuleNotFoundError: No module named 'apscheduler'`
+本项目采用 [MIT License](./LICENSE) 开源。
 
-未安装后端依赖，或使用了未激活虚拟环境的 Python。请执行：
-
-```bash
-cd backend
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-### 提示「未配置 Agnes AI API Key」
-
-进入网页 **设置** 页面，添加至少一个 API Key 并点击 **启用**。
-
-### 七牛云相关错误
-
-检查 `backend/.env` 中的七牛云配置；若暂不需要持久化存储，可先忽略，不影响 AI 生成本身。
-
-## 相关链接
-
-- [Agnes AI 官网](https://agnes-ai.com/)
-- [Agnes AI 开发者文档](https://agnes-ai.com/doc/overview)
-- [Agnes AI 平台（获取 API Key）](https://platform.agnes-ai.com/)
+你可以自由使用、修改和分发本项目的代码，但需保留原始版权声明与许可文本。软件按「原样」提供，不提供任何明示或暗示的担保。
